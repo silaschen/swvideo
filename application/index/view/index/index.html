@@ -1,0 +1,31 @@
+{extend name="index:base" /}
+{block name="main"}
+<style type="text/css">
+  
+  @media screen and (min-width: 980px) {
+    .video a{margin:25px;}
+}
+
+  @media screen and (max-width: 500px) {
+    .video a{margin:10px;}
+}
+
+
+</style>
+<div class="container text-center video" style="padding-top: 10%;width: 80%; ">
+
+    {foreach name="list" item='t'}
+
+
+          <a href="{:url('Index/videolist')}?tag={$t.tag}"  style="{$style[rand(0,6)]};font-size: {:rand(15,30)}px;display: inline-block;">{$t.tag}</a>
+
+
+    {/foreach}
+
+</div>
+
+
+
+
+
+{/block}

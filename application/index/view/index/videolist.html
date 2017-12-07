@@ -1,0 +1,52 @@
+{extend name="index:base" /}
+{block name="main"}
+
+<style type="text/css">
+	.video{background: yellow;padding-left:0;padding-right: 0; }
+	.overs:hover{opacity: 0.7;background: pink;}
+</style>
+<div class="container">
+  
+  <div class="row">
+      
+       {foreach name="list.data" item="v"}
+    
+			  <div class="col-sm-12 col-md-4" onclick="toUrl({$v['id']})">
+			    <div class="thumbnail overs" style="position: relative;">
+			    	<div style="position: absolute;top:0;background:#6f6262 ;opacity: 0.5;left: 0;right: 0;bottom: 90px;"><img style="margin-top: 70px;width: 80px;cursor: pointer;" class="center-block" src="/public/static/play.png">
+			    	</div>
+
+			      <img src="{$v.cover}" alt="..." onmouseover="showplay()" style="cursor: pointer;">
+			      <div class="caption">
+			  
+			        <h4><a href="{:url('Index/play')}?id={$v.id}" style="color: #282828;text-decoration: none;font-size: 16px;">{$v.title}</a></h4>
+			        <p><span>upload at &nbsp{$v.addtime|date="Y-m-d H:i",###}</span></p>
+			      </div>
+			    </div>
+			  </div>
+		
+
+
+
+          
+  {/foreach}
+ 
+
+  </div>
+
+<ul class="pagination pagination-sm no-margin text-center">{$page}</ul>
+</div>
+
+
+<script type="text/javascript">
+	
+
+	function toUrl(id){
+
+			location.href="{:url('Index/play')}?id="+id;
+
+
+	}
+</script>
+
+{/block}

@@ -1,0 +1,30 @@
+<aside class="main-sidebar">
+  <section class="sidebar">
+    <ul class="sidebar-menu">
+      <li><a href=""><i class="fa fa-bar-chart"></i> <span>管理概况</span></a></li>
+
+
+    <li><a href="{:url('Index/videolist')}">video</a></li>
+        <li><a href="{:url('Index/taglist')}">tags</a></li>
+        <li><a href="javascript:alert('we are SW team')">about us</a></li>
+
+    
+    </ul><!-- /.sidebar-menu -->
+  </section>
+  <!-- /.sidebar -->
+</aside>
+<if condition="$eq egt '0' OR $eq neq ''">
+<script type="text/javascript">
+if(!isNaN('{$eq}')){
+  $(".sidebar-menu > li").eq({$eq}).addClass('active');
+}else{
+  $(".sidebar-menu > li").each(function(){
+    var txt = $.trim($(this).children('a').text());
+    if(txt == '{$eq}'){
+      $(this).addClass('active');
+      return;
+    }
+  });
+}
+</script>
+</if>

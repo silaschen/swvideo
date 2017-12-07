@@ -1,0 +1,115 @@
+{extend name="admin:base" /}
+{block name="main"}
+  <link rel="stylesheet" href="/public/com/jQuery-File-Upload-9.9.3/css/jquery.fileupload.css">
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">添加/编辑视频</h3><a href="{:url('Admin/videolist')}" class='btn btn-default btn-xs pull-right'>返回列表</a>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+         <form method="POST" action="{:url('Admin/addvideo')}" id='form'>
+         
+            <div class='form-group'>
+              <label>标题：</label>
+              <input type='text' name='title' class='form-control'>
+            </div>
+        
+            <div class='form-group'>
+              <label>封面图片：</label>
+                <a href="javascript:$('#cover').val('');$('.showcover').html('');" onclick="return confirm('确定清除封面？');" class='pull-right'>清除封面</a> <br>
+                  <button type='button' class='btn btn-success btn-sm fileinput-button'><i class="glyphicon glyphicon-picture"></i> <small>推荐尺寸 400*300 点击上传</small><input  id="uploadcover" type="file" name="files" accept="image/*" ></button>
+                    <div id="progress" class="progress">
+                        <div class="progress-bar progress-bar-success"></div>
+                    </div>
+                    <div id="files" class="files">
+                    </div>
+                    <div class='showcover'>
+              
+                    </div>
+                <input class='hide' name='cover' id='cover'>
+            </div>
+
+            <div class='form-group'>
+              <label>内容：</label>
+                <textarea id="editor_id" name="desc" style="width:100%;min-height:260px;"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label>video key</label>
+              <input type="text" name="key" class="form-control">
+            </div>
+
+            
+            <div class="form-group">
+              <label>tag</label>
+              <input type="text" name="tag" class="form-control" placeholder="红黄蓝,虐童...">
+            </div>
+ 
+
+            <div class='form-group'>
+              <label>浏览量：</label>
+              <input type='number' name='views' class='form-control' placeholder="">
+            </div>
+
+         </form>
+    </div><!-- /.box-body -->
+    <div class="box-footer clearfix">
+      <button type="button" onclick="saveart();" class="btn btn-success pull-right saveart">确定</button>
+    </div>   
+  </div>
+<div class='hide temp'></div>
+<script charset="utf-8" src="/public/com/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="/public/com/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript">
+KindEditor.ready(function(K) {
+    window.editor = K.create('#editor_id',{
+      uploadJson:"{:url('Common/upload',array('body'=>1))}"
+    });
+    editor.html($('.temp').html());
+});
+function saveart(){
+  $("#editor_id").val(editor.html());
+  $.post("{:url('Admin/addvideo')}",$("#form").serialize(),function(data){
+      alert(data.msg);
+   
+  },'JSON');
+}
+</script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/vendor/jquery.ui.widget.js"></script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/load-image.all.min.js"></script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/canvas-to-blob.min.js"></script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/jquery.iframe-transport.js"></script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/jquery.fileupload.js"></script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/jquery.fileupload-process.js"></script>
+<script src="/public/com/jQuery-File-Upload-9.9.3/js/jquery.fileupload-image.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('#uploadcover').fileupload({
+        url: "{:url('Common/upload')}",
+        dataType: 'JSON',
+        acceptFileTypes: 'jpg,png,gif,jpeg,bmp',
+      maxFileSize: 8000000, // 800kb
+      disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator && navigator.userAgent),
+        imageMaxWidth: 700, //自动裁剪保持该宽度
+        imageMaxHeight: 400,
+        imageCrop: true,
+        done: function (e, data) {
+          if(data.result.ret == 1){
+              $("input[name='cover']").val(data.result.file);
+              $(".showcover").html("<img src='/"+data.result.file+"'>");
+            }else{
+              alert(data.result.msg);
+            }
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput)
+        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
+});
+</script>
+{/block}

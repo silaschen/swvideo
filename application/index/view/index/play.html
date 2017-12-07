@@ -1,0 +1,90 @@
+{extend name="index:base" /}
+{block name="main"}
+	<link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">
+  <!-- If you'd like to support IE8 -->
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<style type="text/css">
+  body{overflow: hidden;}
+	@media screen and (max-width: 500px) {
+    #my-video{
+      /*  width: 320px;
+        height: 250px;*/
+        width: 100%;
+        height: 250px;
+    }
+/*    .m{margin: -20px auto;width: 320px;height: 250px}*/
+  }
+	@media screen and (min-width: 800px) {
+    #my-video{
+       /* width: 740px;
+        height: 400px;*/
+        width: 100%;
+        height: 400px;
+    }
+    /*.m{margin: -20px auto;width: 740px;height: 400px}*/
+}
+
+
+</style>
+<div class="row" style="overflow: hidden;">
+    <div class="col-md-7 col-sm-12">
+          <div class="m">
+              <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none"
+                  poster="{$video.cover}"
+                  data-setup="{}">
+                <source src="{$video.url}" type='video/mp4' />
+                <source src="" type='video/webm' />
+                <source src="" type='video/ogg' />
+                <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+                <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track><!-- Tracks need an ending tag thanks to IE9 -->
+            </video>
+
+          </div>
+
+          {foreach name="tags" item='t'}
+
+
+          <a href="{:url('Index/videolist')}?tag={$t.tag}"  style="font-size:15px;display: inline-block;margin: 7px;text-decoration: none;color: #0d88c5;font-weight: bolder;">{$t.tag}</a>
+
+
+          {/foreach}
+    </div>
+
+    <div class="col-md-5 col-sm-12">
+      
+      <div class="panel panel-default">
+        <div class="panel-body">
+          
+              <ul class="media-list">
+          {foreach name="list" item="li"}
+          <li class="media">
+            <div class="media-left">
+              <a href="{:url('Index/play')}?id={$li.id}">
+                <img class="media-object" src="/{$li.cover}" alt="..." width="100">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{$li.title}</h4>
+             
+            </div>
+          </li>
+          {/foreach}
+        </ul>
+        </div>
+      </div>
+
+    </div>
+
+</div>
+
+
+	  <script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
+
+	  <script type="text/javascript">
+			var myPlayer = videojs('my-video');
+			videojs("my-video").ready(function(){
+				var myPlayer = this;
+				// myPlayer.play();
+			});
+		</script>
+{/block}
