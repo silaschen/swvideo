@@ -15,6 +15,13 @@
 <script  src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="Public/com/jQuery-File-Upload-9.9.3/css/jquery.fileupload.css">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8262745877495150",
+    enable_page_level_ads: true
+  });
+</script>
 <!-- <script src="http://html5media.googlecode.com/svn/trunk/src/html5media.min.js"></script> -->
 {block name="head"}
 {/block}
@@ -24,9 +31,9 @@
 {/block}
 
 </head>
-<body>
+<body style="padding-bottom: 15px;background: #f9f9f9;">
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse" style="border-radius: 0;margin-bottom: 0;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -42,11 +49,11 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="{:url('Index/videolist')}">video</a></li>
-        <li><a href="{:url('Index/index')}">tags</a></li>
+        <li><a href="{:url('Index/taglist')}">tags</a></li>
        	<li><a href="{:url('Index/law')}">法律(law)</a></li>
+        <li class="pull-right"><a href="javascript:$('#register').modal('show')">注册</a></li>
+        <li class="pull-right"><a href="">登录</a></li>
       </ul>
-    
-     
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
@@ -54,16 +61,93 @@
 
 {block name="main"}{/block}
 
-
-
-
 <div class="container text-center" style="height: 40px;line-height: 20px;margin-top: 15px;">
   <hr>
   <span>SWvideo team 2017</span>
   <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1271270281'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1271270281%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script><br>
-  <span>广告合作请联系QQ434684326(Sw advteam)</span>
+  <span>Contact us via wechat:talentchensw</span>
 
 </div>
 
+
+
+
+
+
+<div class="modal fade" id="register" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Register for free</h4>
+      </div>
+      <div class="modal-body">
+        <form id="registerform">
+            <div class="form-group">
+              <label>nickname</label>
+              <input type="text" name="nickname" class="form-control">
+            </div>
+
+             <div class="form-group">
+              <label>password</label>
+              <input type="password" name="password" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>email</label>
+              <input type="email" name="mail" class="form-control">
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Register()">REGISTER</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+<script type="text/javascript">
+    function Register(){
+      var nick = $("input[name='nickname']").val();
+      var mail = $("input[name='mail']").val();
+      var password = $("input[name='password']").val();
+      if(!nick || !mail || !password){
+        alert('请输入您的信息');
+        return false;
+      }
+
+      $.post("{:url('Index/register')}",$("#registerform").serialize(),function(data){
+
+              if(data.code == 1){
+                alert("您已经注册成功，请前往您的邮箱验证账户！");
+              }else{
+                alert(data.error);
+              }
+
+
+      },'JSON');
+
+
+
+    }
+
+
+
+</script>
+
+<script type="text/javascript">
+  
+
+  function toUrl(id){
+
+      location.href="{:url('Index/play')}?id="+id;
+
+
+  }
+</script>
 </body>
 </html>

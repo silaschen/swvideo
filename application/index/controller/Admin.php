@@ -133,9 +133,9 @@ class Admin extends Common
 			$video['desc'] = $data['desc'];
 			$video['addtime'] = time();
 			$video['status'] = 1;
-	
-			$video['views'] = 0;
+
 			$r = Db::name('video')->insertGetId($video);
+
 			$this->addTag($r,$tag);
 			if($r){
 				exit(json_encode(['code'=>1,'msg'=>'successfully upload']));

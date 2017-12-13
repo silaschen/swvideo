@@ -4,7 +4,7 @@
   <!-- If you'd like to support IE8 -->
   <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 <style type="text/css">
-  body{overflow: hidden;}
+
 	@media screen and (max-width: 500px) {
     #my-video{
       /*  width: 320px;
@@ -19,15 +19,13 @@
        /* width: 740px;
         height: 400px;*/
         width: 100%;
-        height: 400px;
+        height: 450px;
     }
     /*.m{margin: -20px auto;width: 740px;height: 400px}*/
 }
-
-
 </style>
-<div class="row" style="overflow: hidden;">
-    <div class="col-md-7 col-sm-12">
+<div class="row">
+    <div class="col-md-8 col-sm-12">
           <div class="m">
               <video id="my-video" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="none"
                   poster="{$video.cover}"
@@ -42,38 +40,71 @@
           </div>
 
           {foreach name="tags" item='t'}
-
-
           <a href="{:url('Index/videolist')}?tag={$t.tag}"  style="font-size:15px;display: inline-block;margin: 7px;text-decoration: none;color: #0d88c5;font-weight: bolder;">{$t.tag}</a>
-
-
           {/foreach}
+
+
     </div>
 
-    <div class="col-md-5 col-sm-12">
+    <div class="col-md-4 col-sm-12" style="padding-left: 0;">
       
-      <div class="panel panel-default">
-        <div class="panel-body">
-          
-              <ul class="media-list">
-          {foreach name="list" item="li"}
-          <li class="media">
-            <div class="media-left">
-              <a href="{:url('Index/play')}?id={$li.id}">
-                <img class="media-object" src="/{$li.cover}" alt="..." width="100">
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{$li.title}</h4>
-             
-            </div>
-          </li>
-          {/foreach}
-        </ul>
-        </div>
-      </div>
+
+    <div class="panel panel-default">
+  <div class="panel-body">
+    <p>{$video.title}</p><hr>
+    <p>long:{:round($video.detail.duration/60,2)}min</p><hr>
+    <p>format_long_name:{$video.detail.format_long_name}</p><hr>
+    <p>probe_score: {$video.detail.probe_score}</p>
+  </div>
+</div>
+
 
     </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+<div class="row">
+  
+     <div class="col-md-12 col-sm-12" style="padding-left: 0;padding-right: 0;">
+      
+     
+          
+             
+          {foreach name="list" item="v"}
+              
+
+              <div class="col-sm-12 col-md-4" onclick="toUrl({$v['id']})">
+          <div class="thumbnail overs" style="position: relative;">
+            <div style="position: absolute;top:0;background:#6f6262 ;opacity: 0.5;left: 0;right: 0;bottom: 90px;"><img style="margin-top: 70px;width: 80px;cursor: pointer;" class="center-block" src="{:config('WEBSERVER')}public/static/play.png">
+            </div>
+
+            <img src="{$v.cover}" alt="..." onmouseover="showplay()" style="cursor: pointer;">
+            <div class="caption">
+        
+              <h4><a href="{:url('Index/play')}?id={$v.id}" style="color: #282828;text-decoration: none;font-size: 16px;">{$v.title}</a></h4>
+              <p><span>upload at &nbsp{$v.addtime|date="Y-m-d H:i",###}</span></p>
+            </div>
+          </div>
+        </div>
+          {/foreach}
+   
+ 
+      </div>
+</div>
+
+
+
+
+
 
 </div>
 

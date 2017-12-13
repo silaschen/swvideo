@@ -1,31 +1,185 @@
 {extend name="index:base" /}
 {block name="main"}
+<link href="https://cdn.bootcss.com/Swiper/4.0.7/css/swiper.css" rel="stylesheet">
 <style type="text/css">
-  
+
   @media screen and (min-width: 980px) {
     .video a{margin:25px;}
-}
 
+     .swiper-container {
+      	height: 400px;
+    }
+}
   @media screen and (max-width: 500px) {
     .video a{margin:10px;}
+     .swiper-container {
+
+      height: 350px;
+    }
 }
 
+     .swiper-container {
+      width: 100%;
 
+    }
+     .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+    }
+
+   .list{padding:10px 0;}
 </style>
-<div class="container text-center video" style="padding-top: 10%;width: 80%; ">
 
-    {foreach name="list" item='t'}
+ <!-- Swiper -->
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+    	{foreach name="videolist" item='v'}
+      		<div class="swiper-slide" style="background: url('{$v.cover}');"></div>
+      	{/foreach}
+   
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination"></div>
+  </div>
+
+  <!-- Swiper JS -->
+<script src="https://cdn.bootcss.com/Swiper/4.0.7/js/swiper.js"></script>
+  <!-- Initialize Swiper -->
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+     		 slidesPerView: 3,
+        spaceBetween: 5,
+      // init: false,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      
+       autoplay: {
+   			 delay: 5000,//5秒切换一次
+ 		   },
+ 
+      breakpoints: {
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+        },
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 1,
+        },
+      }
+
+    });
+  </script>
 
 
-          <a href="{:url('Index/videolist')}?tag={$t.tag}"  style="{$style[rand(0,6)]};font-size: {:rand(15,30)}px;display: inline-block;">{$t.tag}</a>
+<div class="container text-center video" style="padding-top: 2%;padding-right: 0;padding-left: 0;">
+  <!--   {foreach name="list" item='t'}
+
+          <a href="{:url('Index/videolist')}?tag={$t.tag}" class="col-sm-3"  style="{$style[rand(0,6)]};font-size: 15px;display: inline-block;">{$t.tag}</a>
+
+    {/foreach} -->
+
+    <div class="row">
+  
+            <div class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading" style="font-size: 25px;font-weight: bold;text-align: left;background:white ;">new movie</div>
+              <div class="panel-body list">
+                  
+                       {foreach name="videolist18" item="v"}
+    
+        <div class="col-sm-12 col-md-4" onclick="toUrl({$v['id']})">
+          <div class="thumbnail overs" style="position: relative;">
+            <div style="position: absolute;top:0;background:#6f6262 ;opacity: 0.5;left: 0;right: 0;bottom: 90px;"><img style="margin-top: 70px;width: 80px;cursor: pointer;" class="center-block" src="{:config('WEBSERVER')}public/static/play.png">
+            </div>
+
+            <img src="{$v.cover}" alt="..." onmouseover="showplay()" style="cursor: pointer;">
+            <div class="caption">
+              <h4><a href="{:url('Index/play')}?id={$v.id}" style="color: #282828;text-decoration: none;font-size: 16px;">{$v.title}</a></h4>
+              <p><span>{$v.addtime|date="Y-m-d",###}</span>&nbsp&nbsp<span class="glyphicon glyphicon-eye-open">{$v.views}</span></p>
+            </div>
+          </div>
+        </div>
+  {/foreach}
 
 
-    {/foreach}
+              </div>
+            </div>
 
-</div>
+          
+
+
+            <div class="panel panel-default">
+              <!-- Default panel contents -->
+              <div class="panel-heading" style="font-size: 25px;font-weight: bold;text-align: left;background:white ;">new movie</div>
+              <div class="panel-body list">
+                  
+                       {foreach name="videolist" item="v"}
+    
+        <div class="col-sm-12 col-md-4" onclick="toUrl({$v['id']})">
+          <div class="thumbnail overs" style="position: relative;">
+            <div style="position: absolute;top:0;background:#6f6262 ;opacity: 0.5;left: 0;right: 0;bottom: 90px;"><img style="margin-top: 70px;width: 80px;cursor: pointer;" class="center-block" src="{:config('WEBSERVER')}public/static/play.png">
+            </div>
+
+            <img src="{$v.cover}" alt="..." onmouseover="showplay()" style="cursor: pointer;">
+            <div class="caption">
+              <h4><a href="{:url('Index/play')}?id={$v.id}" style="color: #282828;text-decoration: none;font-size: 16px;">{$v.title}</a></h4>
+              <p><span>upload at &nbsp{$v.addtime|date="Y-m-d H:i",###}</span></p>
+            </div>
+          </div>
+        </div>
+  {/foreach}
+
+
+              </div>
+            </div>
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+
+
+  
+
+
+
+
+
+  </div>
 
 {/block}
