@@ -3,3 +3,12 @@ git checkout -b branchname(local) origin/branchname新建本地分支，并拉�
 git checkout -b branchname 新建本地分支
 git push origin localbranchname:remotebranchname
 
+
+git push与git pull是一对推送/拉取分支的git命令。 
+git push 使用本地的对应分支来更新对应的远程分支。
+
+$ git push <远程主机名> <本地分支名>:<远程分支名>
+1
+注意: 命令中的本地分支是指将要被推送到远端的分支，而远程分支是指推送的目标分支，即将本地分支合并到远程分支。 
+如果省略远程分支名，则表示将本地分支推送与之存在”追踪关系”的远程分支(通常两者同名)，如果该远程分支不存在，则会被新建。
+
