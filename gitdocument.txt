@@ -1,3 +1,5 @@
 git checkout -b branchname(local) origin/branchname新建本地分支，并拉取远程对应分支代码
 
+git checkout -b branchname 新建本地分支
+git push origin localbranchname:remotebranchname
 
